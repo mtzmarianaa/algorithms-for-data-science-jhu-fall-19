@@ -1,0 +1,280 @@
+Jared Yu
+Programming Assignment 2
+Algorithms for Data Science
+
+The following shows the inputs and outputs for each of the Problems 1-6 from Programming Assignment 2.
+
+### Inputs:
+
+# Problem 1 code (lines 9-45)
+
+In Problem 1, the iris_data_for_cleansing.csv is read into RStudio as iris_cleanse. First the total number of
+NA's is checked, which is displayed as (14) using the command cat(). The column name for the first column is
+then fixed. Two R files are sourced, "replace_missing_data.R" and "feature_na_fill.R". To clean the file, first
+the columns with NA's are detected. They are then imputed with generated features iteratively using means and
+standard deviations of each column. After the NA's are filled, the NA's are counted again which shows that
+there are 0 NA's left. The first 5 observations of the cleaned dataset are shown. The entire file can be seen
+in "iris_cleanse.txt".
+
+# Problem 2 code (lines 47-101)
+
+In Problem 2, the "updated_iris.csv" is loaded into iris_update. This variable is reused throughout the rest
+of the program as the data matrix with labels of the iris dataset. The data is split by class into different
+lists. The minimum, maximum, means, and covariances are derived per class. Then, the files "synthesize_iris_data.R"
+and "normalize_column.R" are loaded. The process of generating 50 observations per class is done, where values
+are initially randomly generated, rotated, and then normalized. The new features are added to a variable called
+iris2_final, with the new features being called "New.Feature.3" and "New.Feature.4".
+
+As a note, from another problem (Problem 4), it was determined that the top two features are Petal Length
+and Petal Width. Therefore, these were the only two features utilized in the process of deriving minimum,
+maximum, means, and covariances values during the data generation process. The first five observations are
+shown. The entire file can be seen in "iris2_final.txt".
+
+# Problem 3 code (lines 103 - 168)
+
+In Problem 3, the methodology chosen was Wilk's Outlier Removal. First the following R files are loaded:
+"population_covariance.R", "wilks_outlier_removal.R", and "automated_wilks.R". The automated_wilks() function
+creates the dataset without outliers and saves it to a variable called outlier_free_iris. The process is that
+the function will iteratively called wilks_outlier_removal to remove outliers one-by-one until the formula
+designates that there are no more outliers. The input into the function is iris_update without the labels,
+also an alpha level of 0.05 is used.
+
+The number of rows retained is output, shown as 136 out of 150. Then a dataframe of the observations is saved
+to a file called, "outlier_free_iris.txt." A plot of all of the observations in gray along with the removed
+outliers in red is shown in a pairwise grid of plots.
+
+# Problem 4 code (lines 170 - 230)
+In Problem 4, the features of the dataset are first visualized to understand the ability for each features
+to separate the data by class. A density plot is created per feature to analyze the distrubiton of each class
+by feature. The plot is saved to a file called, "feature_comparison.jpg." A command is output which indicates
+that the best features for class separation are: New Feature 2, Petal Length, and Petal Width. The input data
+is the iris_update without the labels.
+
+A second process to determine the top features is done. The methodology comes from an email exchange with
+Professor Rodriguez. Each observation's class is predicted using the following calculation:
+
+d1 = (x1 - m1)*s1*(x1-m1)
+d2 = (x1 - m2)*s2*(x1-m2)
+d3 = (x1 - m3)*s3*(x1-m3)
+
+where the smallest d = [d1, d2, d3] is chosen as the class to assign observation x1 to. In this case, x1
+is the first observation, m1 is the mean of the first feature for class 1, and s1 is inverse
+variance-covariance value for the first feature of class 1. The same applies class-wise for m2, m3, s2, and
+s3. The input used is iris_update without the labels.
+
+Then the features are printed in order of their accuracy in predicting the correct labels along with their.
+corresponding accuracies. The top two features are Petal Length and then Petal Width.
+
+# Problem 5 code (lines 232 - 269)
+In Problem 5, the methodology chosen is Kernel PCA. First, the file "gaussian_kernel.R" is first loaded.
+According to office hours, only the first 6 features are to be used (not including the generated features
+7 and 8). The data matrix (not including labels) is saved to a variable called data_X_matrix. The K~ kernel
+matrix is calculated first using gaussian_kernel(). This kernel matrix is then converted to the Gram matrix
+called gram_matrix. The eigenvectors of the Gram matrix are then derived and multiplied with the Gram matrix
+to create the Kernel PCA matrix.
+
+The first two features are saved to a text file called "final_kernel_pca_matrix.txt" and then a biplot of
+the top two features is created. The biplot shows that the Kernel PCA method is able to properly separate
+each of the three classes with great accuracy. The image of the biplot is saved to an image caled,
+"kernel_pca.jpg."
+
+# Problem 6 code (lines 271 - 395)
+# part (a) (lines 272 - 298)
+In Problem 6 part a, the "em_algorithm.R" file is first loaded. All the functions are based on the previous
+homework assignment where EM is used to classify the iris species. After utilizing EM to predict the labels,
+the weights, sigmas, and mixing coefficients are saved to a file called "em.txt." The accuracy of the EM
+algorithm is approximaltey 0.9867. The EM algorithm here is based on the EM style used in the previous
+homework assignment, where standard deviations are used. The input data is iris_update without the labels.
+
+# part (b) (lines 300 - 349)
+In Problem 6 part b, Fisher Linear Discriminant (LDA) is chosen as the methodology for classification. The
+data is first split by class, then means and covariances per class are derived. Next, Within-class and
+between-class scatter matrices are created. The file "distance_measure.R" is sourced. The matrix for the
+measurement of each class from the class means is created. Then the predicted labels are generated. The results
+are that there is 100% prediction accuracy using LDA. The input data is the iris_update without labels.
+
+# part (c) (lines 351 - 373)
+In Problem 6 part c, the methodology chosen is Feed Forward. The algorithm is implemented using the "nnet"
+package for RStudio. According to the documentation, the "nnet" package uses Feedforward to generate
+predictions. The technique is taken from the documentation of how to implement the algorithm. The data is
+first split into test and training data. The train data is trained using a max iteration of 1000 along with
+softmax as one of the activation functions. The reason is that it is multi-class classification, so softmax
+is therefore suitable for the objective. The trained model is then used on the test data to generate a
+confusion matrix. The package's nnet function will output a series of print statements for each iteration
+but these are not saved. The overall accuracy of the neural network is approximately 0.9867. The input data
+is the iris_update without labels.
+
+# part (d) (lines 375 - 395)
+In Problem 6 part d, SVM is used in the one vs. all technique for multi-class SVM classification. First, the
+following files are loaded: "gaussian_kernel.R", "discriminant_output.R", and "svm.R". The Y matrix of
+discriminants are calculated with a Gaussian sigma of 1 and alpha constraint of 100. The optimization is
+done using the quadprog package. The overall accuracy from using SVM is 100%. The input data is iris_update
+without labels.
+
+### Outputs:
+
+# Problem 1 output
+The code will first count the number of NA's and display them, in this case it is:
+"The number of NA's in iris_data_for_cleansing.csv before cleaning is: 14"
+
+After imputing the values, the following is printed:
+"The number of NA's in iris_data_for_cleansing.csv after cleaning is: 0"
+
+The first five observations are also displayed with the following:
+"Show the first 5 rows of the cleaned dataset."
+  sepal.length sepal.width petal.length petal.width New.Feature.1 New.Feature.2 class
+1          5.1         3.5          1.4         0.2      1.611281      2.981148     1
+2          4.9         3.0          1.4         0.2      1.295847      2.210908     1
+3          4.7         3.5          1.3         0.2      1.685578      3.114562     1
+4          4.6         3.1          1.5         0.2      1.546064      2.714977     1
+5          5.0         3.6          1.4         0.2      1.501464      2.815603     1
+6          5.4         3.9          1.7         0.4      1.325835      2.235803     1
+
+The output is a cleansed dataset which can be seen in the text file "iris_cleanse.txt." In this file, all the
+NA's have been removed and imputed with corresponding values derived from each respective feature.
+
+# Problem 2 output
+After creating the synthetic values and adding them to the dataset, the following is printed:
+"Show the first 5 rows of the dataset with new features."
+  sepal.length sepal.width petal.length petal.width New.Feature.1 New.Feature.2 class New.Feature.3
+1          5.1         3.5          1.4         0.2      1.611281      2.981148     1      1.231102
+2          4.9         3.0          1.4         0.2      1.295847      2.210908     1      1.165638
+3          4.7         3.2          1.3         0.2      1.685578      3.114562     1      1.428771
+4          4.6         3.1          1.5         0.2      1.546064      2.714977     1      1.002636
+5          5.0         3.6          1.4         0.2      1.501464      2.815603     1      1.414408
+6          5.4         3.9          1.7         0.4      1.325835      2.235803     1      1.371895
+  New.Feature.4
+1    0.13716087
+2    0.07793284
+3    0.14714049
+4    0.06901965
+5    0.26587209
+6    0.14098371
+
+The output is a dataset with 8 total columns, where the last two are called "New.Feature.3" and "New.Feature.4"
+and have been generated. The entire dataset can be seen in the text document "iris2_final.txt."
+
+# Problem 3 output
+When the code is first run, the following statement is made prior to running the outlier removal algorithm:
+"Use Wilk's Outlier Removal with an alpha level of 0.05."
+Observation:  135
+Squared Mahalanobis distance: 17.6497
+Observation:  132
+Squared Mahalanobis distance: 14.9811
+Observation:  130
+Squared Mahalanobis distance: 14.8454
+Observation:  118
+Squared Mahalanobis distance: 15.3486
+Observation:  42
+Squared Mahalanobis distance: 15.5721
+Observation:  106
+Squared Mahalanobis distance: 13.7989
+Observation:  136
+Squared Mahalanobis distance: 13.4476
+Observation:  106
+Squared Mahalanobis distance: 13.3553
+Observation:  112
+Squared Mahalanobis distance: 13.39
+Observation:  34
+Squared Mahalanobis distance: 13.1258
+Observation:  127
+Squared Mahalanobis distance: 12.681
+Observation:  135
+Squared Mahalanobis distance: 12.7998
+Observation:  33
+Squared Mahalanobis distance: 12.4703
+Observation:  66
+Squared Mahalanobis distance: 12.2991
+
+The printout comes from the wilks_outlier_removal.R which prints the observation removed and the
+corresponding test statistic of squared Mahalnobis distance that led to its removal.
+
+Then, the following is printed afterwards:
+136 rows retained out of 150 rows.
+
+The first five observations are also printed as follows:
+"Show the first 5 rows of the dataset with outliers removed."
+  sepal.length sepal.width petal.length petal.width New.Feature.1 New.Feature.2 class index
+1          5.1         3.5          1.4         0.2      1.611281      2.981148     1     1
+2          4.9         3.0          1.4         0.2      1.295847      2.210908     1     2
+3          4.7         3.2          1.3         0.2      1.685578      3.114562     1     3
+4          4.6         3.1          1.5         0.2      1.546064      2.714977     1     4
+5          5.0         3.6          1.4         0.2      1.501464      2.815603     1     5
+6          5.4         3.9          1.7         0.4      1.325835      2.235803     1     6
+
+The entire dataset can be seen in the file "outlier_free_iris.txt."
+
+Lastly, a multiplot of the pairwise features with the removed observations in red and the rest of
+the observations in gray is displayed. The plot can be seen in the file, "wilks_plot.jpg."
+
+# Problem 4
+A grid of plots per feature is generated and saved to an image called, "feature_comparison.jpg."
+Afterwards, the following is printed out:
+"The features with best class-wise separation are:
+  New Feature 2, Petal Length, and Petal Width."
+
+Then each features are used to try and classify each observation. The following is printed after:
+"The accuracy of the features are as follows: 
+ 0.72 0.5466667 0.9533333 0.9466667 0.3533333 0.9333333"
+
+"The accuracy of the features are in the following order: 3 4 6 1 2 5 
+ Therefore, the top two features are Petal Length then Petal Width."
+
+# Problem 5
+The first five observations of the top two features are displayed:
+          [,1]        [,2]
+[1,] -4.232553 -0.03820092
+[2,] -4.255100 -0.02233679
+[3,] -3.685692 -0.02369540
+[4,] -4.204988 -0.04473122
+[5,] -4.512603 -0.03149619
+[6,] -3.801944 -0.02185519
+
+The entire dataset of the top two features from using Kernel PCA are saved to a file called,
+"final_kernel_pca_matrix.txt." The image of the biplot is saved to an image called, "kernel_pca.jpg."
+
+# Problem 6
+# part (a)
+After utilizing EM to predict the labels, the weights, sigmas, and mixing coefficients are saved to
+a file called "em.txt." The program will predict the labels for the observations and output a
+confusion matrix along with a calculation for the accuracy:
+"The confusion matrix for the EM algorithm is as follows:"
+predicted_labels  1  2  3
+               1 50  0  0
+               2  0 49  1
+               3  0  1 49
+
+"The accuracy of the EM algorithm is as follows:"
+ 0.9866667
+
+# part (b)
+After calculating the predicted labels, the confusion matrix and accuracy are printed:
+"The confusion matrix for LDA is as follows:"
+            predicted_label
+random_label  1  2  3
+           1 50  0  0
+           2  0 50  0
+           3  0  0 50
+"The accuracy of the EM algorithm is as follows:"
+ 1
+
+# part (c)
+After calculating the predicted labels on the test data, the confusion matrix and accuracy are printed:
+"The confusion matrix for the Feed Forward Neural Networkis as follows:"  
+     1  2  3
+  1 25  0  0
+  2  0 25  0
+  3  1  0 24
+"The accuracy of the Feed Forward Neural Network is as follows:"
+ 0.9866667
+
+# part (d)
+After calculating the discriminant matrix, the confusion matrix and accuracy are printed:
+"The confusion matrix for SVM is as follows:"
+predicted_labels_svm  1  2  3
+                   1 50  0  0
+                   2  0 50  0
+                   3  0  0 50
+"The accuracy of SVM is as follows:"
+ 1
+

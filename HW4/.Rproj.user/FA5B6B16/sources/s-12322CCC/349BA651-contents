@@ -1,0 +1,6 @@
+p1 <- (choose(4,0) * choose(6,3)) / choose(10,3)
+p2 <- (choose(4,1) * choose(6,2)) / choose(10,3)
+p3 <- (choose(4,2) * choose(6,1)) / choose(10,3)
+p4 <- (choose(4,3) * choose(6,0)) / choose(10,3)
+
+p1 + p2 + p3 + p4

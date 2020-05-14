@@ -1,0 +1,90 @@
+Jared Yu
+Programming Assignment 1
+Algorithms for Data Science
+
+The following shows the inputs and outputs for each of the Problems 1-3 from Programming Assignment 1.
+
+### Inputs:
+
+# Problem 1 code (lines 8-46)
+
+In Problem 1, the excel file is loaded using the 'read_xlsx()' command from the "readxl" library. In this command
+is the 'path =' argument. It has been changed to load the 'iris.xlsx' excel file from a local folder. In order to
+run this on another desktop, it is required that both the 'iris.xlsx' file is included and the local path leading
+to that excel file. The arguments 'sheet =' indicate which sheet to load from the excel file, and the
+'col_names = FALSE' command indicates that the excel files do not contain a header.
+
+*NOTE*: It was mentioned by the professor that due to the assignment being done in RStudio, it was not necessary that any
+specific algorithm was required to read in the data. It is possible to do so in the style of R/Python code, where
+code is executed in a line-by-line manner.
+
+# Problem 2 code (lines 47-119)
+
+In Problem 2, the function 'plot_2_features()' (lines 56-86) is created to plot two features from the iris dataset. The function has
+the following arguments: 'feature1', 'feature2', 'data_set', and 'class_name'. The first two variables, 'feature1' and
+'feature2' are the arguments that need to be changed to sort different pairs of features out of the 4 from the dataset.
+
+Following are an example of possibilities for 'feature1' and 'feature2':
+plot_2_features(feature1 = 'petal_length', feature2 = 'petal_width')
+plot_2_features(feature1 = 'petal_length', feature2 = 'sepal_length')
+etc.
+
+The last two features have default arguments that don't need to be changed, where 'data_set' is set to 'iris_dataframe'
+and 'class_name' is set to 'iris_class'. The argument 'data_set' indicates what dataset is being used, in this case it
+is the iris data. The argument 'class_name' is used for the plotting purposes so that 'ggplot2' can properly factor
+the data into different categories.
+
+On lines 95-98, the for-loop will indicate which plots are showing which two features. The process of plotting the six
+different combinations of the four features is done on lines 101-118.
+
+# Problem 3 code (lines 120-192)
+
+The function created in Problem 3 is the 'selection_sort()' function (lines 128-159). The only argument to the function
+is an argument named 'feature_array' which is to received one of the four features as a vector/array. This process is completed
+on lines 168-171, where the four features are sorted and saved to variables named 'feature_#_sort', where # is indexed 1-4.
+
+Following are an example of possibilities for 'selection_sort()':
+selection_sort(iris_data$sepal_length)
+selection_sort(iris_data$petal_width)
+etc.
+
+The function 'selection_sort()' itself will return a sorted array of row indices, where the row indices from the iris dataset
+have been sorted using the method selection sort for one feature at a time. This function is then used on each of the features
+to sort the dataframe four times by each of the four features and the resulting sorted dataframe is saved to 'feature_#_sort'.
+The plotting is also done on line 181-192.
+
+
+### Outputs:
+
+# Problem 1 output
+
+Although no output is specifically created, there are certain key variables that are created.
+
+iris_dataframe - The iris data loaded from the excel spreadsheet.
+
+dataframe_class - The column of classes loaded from the excel spreadseet.
+
+dataframe_labels - The sheet with labels and other information loaded from the excel spreadsheet.
+
+feature_names - Names of the columns taken from dataframe_labels used to create a header for the iris_dataframe.
+
+class_names - The name of the classes taken from dataframe_labels as a vector to be used during plotting.
+
+# Problem 2 output
+
+The output for Problem 2 comes in two parts. The first part are on lines 95-98, where a for-loop outputs a series of
+string outputs indicating Plot # (where # is 1-6), and a combination of two features. The second part of the output
+are the plots themselves on lines 101-118. The first part of the output is saved and shown in the ReadMe.txt. The second
+part of the output is saved as a series of '.png' files, with names 'plot_#_2_features.png', where # is indexed from 1-6.
+
+# Problem 3 output
+
+The output of Problem 3 is a series of four different plots, where each plot is one of the features that have been sorted
+using the selection sort method. The plot itself is a scatterplot that shows on the x-axis the row indices 1-150 and on the
+y-axis is the class that each of the indices belong to numbered 1-3. Class 1 represents Setosa, class 2 represents Versicolor,
+and class 3 represents Virginica. The plots are saved in the zip file and named 'plot_#_sorted_features.png' where # is
+indexed 1-4. As an example, in 'plot_1_sorted_features.png', the 'Sepal Length' feature is used to sort the row indices of
+the iris dataset. On the x-axis are the row indices 1-150 and on the y-axis it will indicate which class each of the corresponding
+row indices belong to. It is apparent that there is significant overlap of classes, particularly amongst classes 2 and 3.
+
+
